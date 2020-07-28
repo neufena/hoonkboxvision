@@ -28,6 +28,7 @@
     "typescript": "^3.9.7"
   },
   "dependencies": {
+    "rpio": "^2.2.0",
     "rtpmidi": "^1.0.0"
   }
 }
