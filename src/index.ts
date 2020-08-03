@@ -4,7 +4,7 @@ const rpio = require('rpio');
 const remote: string = '127.0.0.1';
 const smokePin = 11;
 
-rpio.open(smokePin, rpio.OUTPUT); //3rd arguement rpio.HIGH/LOW
+rpio.open(smokePin, rpio.OUTPUT); //3rd arguement default....rpio.HIGH/LOW
 
 const session = rtpmidi.manager.createSession({
   port: 5008,
@@ -32,54 +32,27 @@ session.on('message', (deltaTime: number, message: Buffer) => {
   }
 
   if (note === 10) {
-    videoLoad(1, velocity, true);
+    videoPlay(1, velocity, true);
     return;
   }
 
   if (note === 11) {
-    videoLoad(1, velocity, true);
-    videoPlay(1);
+    videoPlay(1, velocity, true);
     return;
   }
 
-  if (note === 12) {
-    videoPlay(1);
-    return;
-  }
-
-  if (note === 13) {
-    videoPause(1);
-    return;
-  }
-
-  if (note === 14) {
+  if (note === 11) {
     videoStop(1);
     return;
   }
 
   if (note === 20) {
-    videoLoad(1, velocity, false);
+    videoPlay(2, velocity, false);
     return;
   }
 
   if (note === 21) {
-    videoLoad(1, velocity, false);
-    videoPlay(1);
-    return;
-  }
-
-  if (note === 22) {
-    videoPlay(1);
-    return;
-  }
-
-  if (note === 23) {
-    videoPause(1);
-    return;
-  }
-
-  if (note === 24) {
-    videoStop(1);
+    videoStop(2);
     return;
   }
 });
@@ -103,10 +76,6 @@ function smoke(duration: number) {
   setTimeout(smokeOff, duration);
 }
 
-function videoLoad(layer: number, file: number, loop: boolean) {}
-
-function videoPlay(layer: number) {}
-
-function videoPause(layer: number) {}
+function videoPlay(layer: number, file: number, loop: boolean) {}
 
 function videoStop(layer: number) {}
