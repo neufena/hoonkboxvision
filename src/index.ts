@@ -1,7 +1,6 @@
 const rtpmidi = require('rtpmidi');
 const rpio = require('rpio');
-const fkill = require('fkill');
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
 
 const remote = '192.168.10.10';
 const smokePin = 11;
@@ -53,6 +52,7 @@ session.on('message', (deltaTime: number, message: Buffer) => {
 
 function allOff() {
   smokeOff();
+  videoStop();
 }
 
 function smokeOn() {
@@ -72,13 +72,11 @@ function smoke(duration: number) {
 
 function videoPlay(file: number, loop: boolean) {
   const path = videoPath + '/video' + file + '.h264';
-  console.log('video play ' + path + (loop ? 'looped' : 'once'));
-  const command = playerPath + ' ' + (loop ? '--loop ' : '') + path;
+  const loopArg = '--loop' + (loop ? '' : '=1');
   videoStop();
-  spawn(command);
+  spawn(playerPath, [loopArg, path]);
 }
 
 function videoStop() {
-  console.log('video stop');
-  fkill('hello_video.bin');
+  spawnSync('killall', ['hello_video.bin']);
 }
