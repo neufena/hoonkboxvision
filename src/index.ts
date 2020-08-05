@@ -1,8 +1,12 @@
 const rtpmidi = require('rtpmidi');
 const rpio = require('rpio');
+const fkill = require('fkill');
+const { spawn } = require('child_process');
 
-const remote: string = '127.0.0.1';
+const remote = '192.168.10.10';
 const smokePin = 11;
+const videoPath = '/home/pi/videos';
+const playerPath = '/home/pi/bin/hello_video.bin';
 
 rpio.open(smokePin, rpio.OUTPUT); //3rd arguement default....rpio.HIGH/LOW
 
@@ -32,27 +36,17 @@ session.on('message', (deltaTime: number, message: Buffer) => {
   }
 
   if (note === 10) {
-    videoPlay(1, velocity, true);
+    videoPlay(velocity, false);
     return;
   }
 
   if (note === 11) {
-    videoPlay(1, velocity, true);
+    videoPlay(velocity, true);
     return;
   }
 
-  if (note === 11) {
-    videoStop(1);
-    return;
-  }
-
-  if (note === 20) {
-    videoPlay(2, velocity, false);
-    return;
-  }
-
-  if (note === 21) {
-    videoStop(2);
+  if (note === 12) {
+    videoStop();
     return;
   }
 });
@@ -76,6 +70,15 @@ function smoke(duration: number) {
   setTimeout(smokeOff, duration);
 }
 
-function videoPlay(layer: number, file: number, loop: boolean) {}
+function videoPlay(file: number, loop: boolean) {
+  const path = videoPath + '/video' + file + '.h264';
+  console.log('video play ' + path + (loop ? 'looped' : 'once'));
+  const command = playerPath + ' ' + (loop ? '--loop ' : '') + path;
+  videoStop();
+  spawn(command);
+}
 
-function videoStop(layer: number) {}
+function videoStop() {
+  console.log('video stop');
+  fkill('hello_video.bin');
+}
