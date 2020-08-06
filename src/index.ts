@@ -8,6 +8,7 @@ const videoPath = '/home/pi/videos';
 const playerPath = '/home/pi/bin/hello_video.bin';
 
 rpio.open(smokePin, rpio.OUTPUT, rpio.HIGH);
+rtpmidi.logger.transports[0].level = 'error';
 
 const session = rtpmidi.manager.createSession({
   name: 'HOONkbox Vision',
