@@ -7,10 +7,11 @@ const smokePin = 11;
 const videoPath = '/home/pi/videos';
 const playerPath = '/home/pi/bin/hello_video.bin';
 
-rpio.open(smokePin, rpio.OUTPUT); //3rd arguement default....rpio.HIGH/LOW
+rpio.open(smokePin, rpio.OUTPUT, rpio.HIGH);
 
 const session = rtpmidi.manager.createSession({
-  port: 5008,
+  name: 'HOONkbox Vision',
+  port: 5004,
 });
 
 session.connect({ address: remote, port: 5004 });
@@ -56,13 +57,11 @@ function allOff() {
 }
 
 function smokeOn() {
-  rpio.write(smokePin, rpio.HIGH);
-  console.log('smoke on');
+  rpio.write(smokePin, rpio.LOW);
 }
 
 function smokeOff() {
-  rpio.write(smokePin, rpio.LOW);
-  console.log('smoke off');
+  rpio.write(smokePin, rpio.HIGH);
 }
 
 function smoke(duration: number) {
