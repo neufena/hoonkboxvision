@@ -11,3 +11,5 @@
 ### To encode video to correct format:
 
 ffmpeg -i input_file.avi -vcodec copy -an -bsf:v h264_mp4toannexb output_file.h264
+
+Copy built index.js package.json to deploy folder then run npm install --no-optional --production
