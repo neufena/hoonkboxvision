@@ -1,5 +1,7 @@
 # HOONkbox Vision control software
 
+Custom visual control software built for [West Echo Three](https://westechothree.co.uk/)
+
 ## Midi Notes
 
 - 1: All off (stops smoke and all videos)
