@@ -2,6 +2,8 @@
 
 Custom visual control software built for [West Echo Three](https://westechothree.co.uk/)
 
+Target is Node 14
+
 ## Midi Notes
 
 - 1: All off (stops smoke and all videos)
@@ -15,3 +17,7 @@ Custom visual control software built for [West Echo Three](https://westechothree
 ffmpeg -i input_file.avi -vcodec copy -an -bsf:v h264_mp4toannexb output_file.h264
 
 Copy built index.js package.json to deploy folder then run npm install --no-optional --production
+
+## Build
+
+npn run build
