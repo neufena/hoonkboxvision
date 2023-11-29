@@ -12,82 +12,83 @@ rpio.open(smokePin, rpio.OUTPUT, rpio.HIGH);
 rtpmidi.logger.transports[0].level = 'error';
 
 const session = rtpmidi.manager.createSession({
-    name: 'HOONkbox Vision',
-    port: 5004,
+  name: 'HOONkbox Vision',
+  port: 5004,
 });
 
 session.connect({ address: remote, port: 5004 });
+videoPlay(99, true);
 
 session.on('message', (deltaTime: number, message: Buffer) => {
-    const commands: number[] = Array.prototype.slice.call(message, 0);
-    if (commands[0] !== 144) {
-        return;
-    }
+  const commands: number[] = Array.prototype.slice.call(message, 0);
+  if (commands[0] !== 144) {
+    return;
+  }
 
-    const note: number = commands[1];
-    const velocity: number = commands[2];
+  const note: number = commands[1];
+  const velocity: number = commands[2];
 
-    if (note === 1) {
-        allOff();
-        return;
-    }
+  if (note === 1) {
+    allOff();
+    return;
+  }
 
-    if (note === 2) {
-        smoke(velocity * 100);
-        return;
-    }
+  if (note === 2) {
+    smoke(velocity * 100);
+    return;
+  }
 
-    if (note === 10) {
-        videoPlay(velocity, false);
-        return;
-    }
+  if (note === 10) {
+    videoPlay(velocity, false);
+    return;
+  }
 
-    if (note === 11) {
-        videoPlay(velocity, true);
-        return;
-    }
+  if (note === 11) {
+    videoPlay(velocity, true);
+    return;
+  }
 
-    if (note === 12) {
-        videoStop();
-        return;
-    }
+  if (note === 12) {
+    videoStop();
+    return;
+  }
 });
 
 function allOff() {
-    smokeOff();
-    videoStop();
+  smokeOff();
+  videoStop();
 }
 
 function smokeOn() {
-    rpio.write(smokePin, rpio.LOW);
+  rpio.write(smokePin, rpio.LOW);
 }
 
 function smokeOff() {
-    log('Smoke off');
-    rpio.write(smokePin, rpio.HIGH);
+  log('Smoke off');
+  rpio.write(smokePin, rpio.HIGH);
 }
 
 function smoke(duration: number) {
-    log('Smoke on for' + duration / 10 + ' seconds');
-    smokeOn();
-    setTimeout(smokeOff, duration);
+  log('Smoke on for' + duration / 10 + ' seconds');
+  smokeOn();
+  setTimeout(smokeOff, duration);
 }
 
 function videoPlay(file: number, loop: boolean) {
-    const path = videoPath + '/video' + file + '.h264';
-    const loopArg = '--loop' + (loop ? '' : '=1');
-    videoStop();
-    log('Play video' + path + '.h264 ' + (loop ? 'looped' : 'once'));
-    spawn(playerPath, [loopArg, path]);
+  const path = videoPath + '/video' + file + '.h264';
+  const loopArg = '--loop' + (loop ? '' : '=1');
+  videoStop();
+  log('Play video' + path + '.h264 ' + (loop ? 'looped' : 'once'));
+  spawn(playerPath, [loopArg, path]);
 }
 
 function videoStop() {
-    log('Stop videos');
-    spawnSync('killall', ['hello_video.bin']);
+  log('Stop videos');
+  spawnSync('killall', ['hello_video.bin']);
 }
 
 function log(message: string) {
-    if (verbose) {
-        console.log(message);
-    }
+  if (verbose) {
+    console.log(message);
+  }
 }
