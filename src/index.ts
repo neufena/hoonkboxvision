@@ -6,7 +6,7 @@ const remote = '192.168.10.10';
 const smokePin = 11;
 const videoPath = '/home/pi/videos';
 const playerPath = '/home/pi/bin/hello_video.bin';
-const verbose = false;
+const verbose = "VERBOSE" in process.env;
 
 rpio.open(smokePin, rpio.OUTPUT, rpio.HIGH);
 rtpmidi.logger.transports[0].level = 'error';
@@ -79,7 +79,10 @@ function videoPlay(file: number, loop: boolean) {
   const loopArg = '--loop' + (loop ? '' : '=1');
   videoStop();
   log('Play video' + path + '.h264 ' + (loop ? 'looped' : 'once'));
-  spawn(playerPath, [loopArg, path]);
+  const playback = spawn(playerPath, [loopArg, path]);
+  playback.on('error', function(err) {
+    log(err.message);
+  });
 }
 
 function videoStop() {
