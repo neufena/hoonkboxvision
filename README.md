@@ -12,12 +12,24 @@ Target is Node 14
 - 11: Video - play looped (velocity X file suffix IE videoX.h264)
 - 12: Video - stop
 
+## Midi CCs
+
+For all CCs over 64 turns on, under turns off
+- 1: Red one
+- 2: Green one
+- 3: Blue one
+- 4: Red two
+- 5: Green two
+- 6: Blue two
+
 ## To encode video to correct format
 
 ffmpeg -i input_file.avi -vcodec copy -an -bsf:v h264_mp4toannexb output_file.h264
 
-Copy built index.js package.json to deploy folder then run npm install --no-optional --production
-
 ## Build
 
-npn run build
+npm run build
+
+## Deploy
+
+Copy built index.js package.json to deploy folder then run npm install --no-optional --production
