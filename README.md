@@ -15,6 +15,7 @@ Target is Node 14
 ## Midi CCs
 
 For all CCs over 64 turns on, under turns off
+
 - 1: Red one
 - 2: Green one
 - 3: Blue one
@@ -33,3 +34,9 @@ npm run build
 ## Deploy
 
 Copy built index.js package.json to deploy folder then run npm install --no-optional --production
+
+## Environment Variables
+
+- VERBOSE: Run in verbose output mode. Default `false`
+- SELFTEST: Run a self test of the RGB then exit Default `false`
+- REMOTE_IP: Remote IP for rtpMIDI. Default `192.168.10.10`
