@@ -10,14 +10,14 @@ const selftest = process.env.SELFTEST || false;
 const remote = process.env.REMOTE_IP || '192.168.10.10';
 
 const rgbOnePins = {
-    "red": 10,
+    "blue": 10,
     "green": 11,
-    "blue": 12,
+    "red": 12,
 };
 const rgbTwoPins = {
-    "red": 21,
+    "blue": 21,
     "green": 22,
-    "blue": 23,
+    "red": 23,
 };
 
 rpio.open(smokePin, rpio.OUTPUT, rpio.HIGH);
@@ -131,8 +131,8 @@ function handleNote(note: number, velocity: number) {
 function handleControlChange(control: number, value: number) {
     const status = (value >= 64);
     if (control === 1) {
-        log('Red One ' + ( status ? 'On' : 'Off'));
-        rpio.write(rgbOnePins.red, (status ? rpio.LOW : rpio.HIGH));
+        log('Blue One ' + ( status ? 'On' : 'Off'));
+        rpio.write(rgbOnePins.blue, (status ? rpio.LOW : rpio.HIGH));
     }
 
     if (control === 2) {
@@ -141,13 +141,13 @@ function handleControlChange(control: number, value: number) {
     }
 
     if (control === 3) {
-        log('Blue One ' + ( status ? 'On' : 'Off'));
-        rpio.write(rgbOnePins.blue, (status ? rpio.LOW : rpio.HIGH));
+        log('Red One ' + ( status ? 'On' : 'Off'));
+        rpio.write(rgbOnePins.red, (status ? rpio.LOW : rpio.HIGH));
     }
 
     if (control === 4) {
-        log('Red Two ' + ( status ? 'On' : 'Off'));
-        rpio.write(rgbTwoPins.red, (status ? rpio.LOW : rpio.HIGH));
+        log('Blue Two ' + ( status ? 'On' : 'Off'));
+        rpio.write(rgbTwoPins.blue, (status ? rpio.LOW : rpio.HIGH));
     }
 
     if (control === 5) {
@@ -156,8 +156,8 @@ function handleControlChange(control: number, value: number) {
     }
 
     if (control === 6) {
-        log('Blue Two ' + ( status ? 'On' : 'Off'));
-        rpio.write(rgbTwoPins.blue, (status ? rpio.LOW : rpio.HIGH));
+        log('Red Two ' + ( status ? 'On' : 'Off'));
+        rpio.write(rgbTwoPins.red, (status ? rpio.LOW : rpio.HIGH));
     }
 }
 

@@ -16,12 +16,12 @@ Target is Node 14
 
 For all CCs over 64 turns on, under turns off
 
-- 1: Red one
+- 1: Blue one
 - 2: Green one
-- 3: Blue one
-- 4: Red two
+- 3: Red one
+- 4: Blue two
 - 5: Green two
-- 6: Blue two
+- 6: Red two
 
 ## To encode video to correct format
 
